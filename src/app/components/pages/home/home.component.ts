@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {MomentService} from "../../../services/moment.service";
+import {Moment} from "../../../interfaces/Moment";
+import {environment} from "src/environments/environment";
+import {faSearch} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-home',
@@ -7,9 +11,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  allMoments: Moment[] = [];
+
+  filteredMoments: Moment[] = [];
+
+  baseApiUrl = environment.baseApiUrl;
+
+  //TODO search
+
+  constructor(private momentService: MomentService) {
+
+  }
 
   ngOnInit(): void {
+    this.momentService.getMoments().subscribe(
+      (items) => {
+        const data = items.data;
+
+        data.map((item) => {
+          item.created_at = new Date(item.created_at!).toLocaleDateString('pt-BR');
+        })
+
+        this.allMoments = data;
+        this.filteredMoments = data;
+      })
   }
 
 }
