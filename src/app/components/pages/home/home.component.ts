@@ -34,6 +34,8 @@ export class HomeComponent implements OnInit {
 
         this.allMoments = data;
         this.filteredMoments = data;
+
+        console.log(this.allMoments)
       })
   }
 
