@@ -1,8 +1,17 @@
 <div class="home-container">
   <h1>Veja o que estão compartilhando:</h1>
-  <div *ngIf="allMoments.length > 0; else noMoments">
+  <div class="search-container">
+    <form>
+      <fa-icon [icon]="faSearch"></fa-icon>
+      <input
+        type="text"
+        placeholder="Ou busque por um momento..."
+             (input)="search($event)">
+    </form>
+  </div>
+  <div *ngIf="filteredMoments.length > 0; else noMoments">
     <div class="moments-container">
-      <div class="moment" *ngFor="let moment of allMoments">
+      <div class="moment" *ngFor="let moment of filteredMoments">
         <img
           src="{{ baseApiUrl }}uploads/{{ moment.image }}"
           alt="{{ moment.title }}"

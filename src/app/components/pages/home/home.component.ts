@@ -11,6 +11,10 @@ import {faSearch} from "@fortawesome/free-solid-svg-icons";
 })
 export class HomeComponent implements OnInit {
 
+  faSearch = faSearch
+
+  searchTerm : String = "";
+
   allMoments: Moment[] = [];
 
   filteredMoments: Moment[] = [];
@@ -18,6 +22,18 @@ export class HomeComponent implements OnInit {
   baseApiUrl = environment.baseApiUrl;
 
   //TODO search
+  search(e : Event) : void{
+    const target = e.target as HTMLInputElement
+    const value = target.value
+
+    console.log(value)
+
+    this.filteredMoments = this.allMoments.filter((moment) => {
+      return moment.title.toLowerCase().includes(value.toLowerCase())
+    })
+
+    console.log(this.filteredMoments)
+  }
 
   constructor(private momentService: MomentService) {
 
@@ -38,5 +54,7 @@ export class HomeComponent implements OnInit {
         console.log(this.allMoments)
       })
   }
+
+
 
 }
